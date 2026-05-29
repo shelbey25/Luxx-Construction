@@ -347,7 +347,7 @@ function ReviewsPanel() {
   const [items, setItems] = useState<Review[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState<"all" | "approved" | "pending">("all");
+  const [filter, setFilter] = useState<"all" | "displayed" | "hidden">("all");
 
   async function load() {
     setLoading(true);
@@ -367,12 +367,20 @@ function ReviewsPanel() {
 
   const visible = useMemo(() => {
     if (!items) return [];
-    if (filter === "approved") return items.filter((r) => r.approved);
-    if (filter === "pending") return items.filter((r) => !r.approved);
-    return items;
+    const filtered =
+      filter === "displayed"
+        ? items.filter((r) => r.approved)
+        : filter === "hidden"
+          ? items.filter((r) => !r.approved)
+          : items;
+
+    return filtered.slice().sort((a, b) => {
+      if (a.approved !== b.approved) return Number(b.approved) - Number(a.approved);
+      return b.createdAt.localeCompare(a.createdAt);
+    });
   }, [items, filter]);
 
-  async function toggleApprove(r: Review) {
+  async function toggleDisplayed(r: Review) {
     try {
       await adminSetReviewApproved(r.id, !r.approved);
       setItems((cur) =>
@@ -403,7 +411,7 @@ function ReviewsPanel() {
       />
 
       <div className="mt-4 flex flex-wrap gap-2">
-        {(["all", "approved", "pending"] as const).map((f) => (
+        {(["all", "displayed", "hidden"] as const).map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
@@ -421,7 +429,7 @@ function ReviewsPanel() {
       {error && <ErrorBanner message={error} />}
 
       {items && items.length === 0 && !loading && (
-        <EmptyState title="No reviews yet" body="Submitted reviews show up here for moderation." />
+        <EmptyState title="No reviews yet" body="Submitted reviews show up here for display control." />
       )}
 
       <ul className="mt-6 space-y-3">
@@ -438,7 +446,7 @@ function ReviewsPanel() {
                         : "border-amber-400/40 text-amber-200"
                     }`}
                   >
-                    {r.approved ? "Approved" : "Pending"}
+                    {r.approved ? "Displayed" : "Hidden"}
                   </span>
                 </div>
                 <p className="mt-1 text-xs text-bone-300">
@@ -461,14 +469,14 @@ function ReviewsPanel() {
 
             <div className="mt-4 flex flex-wrap gap-2">
               <button
-                onClick={() => toggleApprove(r)}
+                onClick={() => toggleDisplayed(r)}
                 className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-[10px] uppercase tracking-luxe ${
                   r.approved
                     ? "border-bone-100/15 text-bone-200 hover:border-amber-400/50 hover:text-amber-200"
                     : "border-emerald-400/40 text-emerald-200 hover:bg-emerald-500/10"
                 }`}
               >
-                {r.approved ? "Unapprove" : "Approve"}
+                {r.approved ? "Hide" : "Display"}
               </button>
               <button
                 onClick={() => handleDelete(r.id)}
