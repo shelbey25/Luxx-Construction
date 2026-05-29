@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Logo } from "./Logo";
 
 const LINKS = [
   { href: "#services", label: "Expertise" },
@@ -30,12 +31,7 @@ export function Nav() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6 sm:py-5 md:px-10">
         <a href="#top" className="group flex items-center gap-3">
-          <span className="font-display text-xl font-medium tracking-wide text-bone-100 sm:text-2xl">
-            LUXX
-          </span>
-          <span className="text-[10px] uppercase tracking-luxe text-gold-500">
-            Construction
-          </span>
+          <Logo compact />
         </a>
 
         <nav className="hidden items-center gap-10 md:flex">

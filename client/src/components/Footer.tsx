@@ -1,14 +1,12 @@
 import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { Logo } from "./Logo";
 
 export function Footer() {
   return (
     <footer className="relative border-t border-bone-100/5 bg-ink-900 pb-10 pt-16 sm:pt-20">
       <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:gap-12 sm:px-6 md:grid-cols-12 md:px-10">
         <div className="md:col-span-5">
-          <p className="font-display text-3xl text-bone-100">LUXX</p>
-          <p className="mt-2 text-xs uppercase tracking-luxe text-gold-500">
-            Construction
-          </p>
+          <Logo className="items-start" imageClassName="w-[112px] sm:w-[124px]" />
           <p className="mt-6 max-w-sm text-sm text-bone-300">
             Family owned. Florida built. Delivering luxury residential, commercial
             and consulting solutions across South Florida.
