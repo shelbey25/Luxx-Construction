@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  background: #0a0a0b;
+  color: #f6f2ea;
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #0a0a0b; }
+::-webkit-scrollbar-thumb { background: #2a2a30; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a42; }
+
+@layer components {
+  .eyebrow {
+    @apply font-sans text-[11px] uppercase tracking-luxe text-gold-500/90;
+  }
+  .display {
+    @apply font-display font-light leading-[0.95];
+  }
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+           bg-gold-500 px-5 py-3 text-[12px] font-medium uppercase tracking-[0.18em]
+           text-ink-900 transition-all duration-300 sm:px-7 sm:text-sm
+           hover:bg-gold-300 hover:shadow-gold active:scale-[0.98];
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+           border border-bone-100/15 px-5 py-3 text-[12px] font-medium uppercase
+           tracking-[0.18em] text-bone-100 transition-all duration-300
+           sm:px-7 sm:text-sm
+           hover:border-gold-500/70 hover:text-gold-300;
+  }
+  .field {
+    @apply w-full rounded-xl border border-bone-100/10 bg-ink-800/60 px-4 py-3
+           text-bone-100 placeholder:text-bone-400/60
+           focus:border-gold-500/60 focus:outline-none focus:ring-2 focus:ring-gold-500/20
+           transition;
+  }
+  .hairline {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-gold-500/40 to-transparent;
+  }
+}
+
+/* Subtle film-grain overlay used by hero */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--tw-bg-grain, none);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: 0.35;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}

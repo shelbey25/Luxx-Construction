@@ -1,0 +1,41 @@
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import rateLimit from "express-rate-limit";
+import { contactRouter } from "./routes/contact.js";
+import { reviewsRouter } from "./routes/reviews.js";
+
+const app = express();
+const PORT = Number(process.env.PORT ?? 4000);
+
+app.use(express.json({ limit: "32kb" }));
+app.use(
+  cors({
+    origin: (process.env.CLIENT_ORIGIN ?? "http://localhost:5173").split(","),
+    methods: ["GET", "POST"],
+  })
+);
+
+app.use(
+  "/api/",
+  rateLimit({
+    windowMs: 60_000,
+    max: 30,
+    standardHeaders: true,
+    legacyHeaders: false,
+  })
+);
+
+app.get("/api/health", (_req, res) => res.json({ ok: true }));
+
+app.use("/api/contact", contactRouter);
+app.use("/api/reviews", reviewsRouter);
+
+app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  console.error("[server] error:", err);
+  res.status(500).json({ error: "Internal server error" });
+});
+
+app.listen(PORT, () => {
+  console.log(`[luxx-server] listening on http://localhost:${PORT}`);
+});
