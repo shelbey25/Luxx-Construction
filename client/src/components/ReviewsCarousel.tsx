@@ -23,7 +23,6 @@ export function ReviewsCarousel() {
   const [error, setError] = useState<string | null>(null);
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
-  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -47,10 +46,10 @@ export function ReviewsCarousel() {
   );
 
   useEffect(() => {
-    if (paused || items.length < 2) return;
+    if (items.length < 2) return;
     const id = window.setInterval(() => go(1), 7000);
     return () => window.clearInterval(id);
-  }, [paused, items.length, go]);
+  }, [items.length, go]);
 
   const current = items[index];
 
@@ -58,8 +57,6 @@ export function ReviewsCarousel() {
     <section
       id="reviews"
       className="relative overflow-hidden bg-ink-900 py-20 sm:py-24 md:py-36"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
     >
       <div
         aria-hidden

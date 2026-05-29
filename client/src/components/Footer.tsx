@@ -1,4 +1,3 @@
-import { Facebook, Instagram, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Logo } from "./Logo";
 
@@ -12,17 +11,6 @@ export function Footer() {
             Family owned. Florida built. Delivering luxury residential, commercial
             and consulting solutions across South Florida.
           </p>
-          <div className="mt-6 flex gap-3">
-            <a aria-label="Facebook" href="#" className="rounded-full border border-bone-100/15 p-2 text-bone-200 hover:border-gold-500 hover:text-gold-300">
-              <Facebook size={16} />
-            </a>
-            <a aria-label="Instagram" href="#" className="rounded-full border border-bone-100/15 p-2 text-bone-200 hover:border-gold-500 hover:text-gold-300">
-              <Instagram size={16} />
-            </a>
-            <a aria-label="LinkedIn" href="#" className="rounded-full border border-bone-100/15 p-2 text-bone-200 hover:border-gold-500 hover:text-gold-300">
-              <Linkedin size={16} />
-            </a>
-          </div>
         </div>
 
         <div className="md:col-span-3">
