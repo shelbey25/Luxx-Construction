@@ -9,10 +9,27 @@ import { adminRouter } from "./routes/admin.js";
 const app = express();
 const PORT = Number(process.env.PORT ?? 4000);
 
+function normalizeOrigin(origin: string): string {
+  return origin.trim().replace(/\/$/, "");
+}
+
+const allowedOrigins = (process.env.CLIENT_ORIGIN ?? "http://localhost:5173")
+  .split(",")
+  .map(normalizeOrigin)
+  .filter(Boolean);
+
 app.use(express.json({ limit: "32kb" }));
 app.use(
   cors({
-    origin: (process.env.CLIENT_ORIGIN ?? "http://localhost:5173").split(","),
+    origin(origin, callback) {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+
+      const normalizedOrigin = normalizeOrigin(origin);
+      callback(null, allowedOrigins.includes(normalizedOrigin));
+    },
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
