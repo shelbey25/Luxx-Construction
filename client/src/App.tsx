@@ -1,25 +1,49 @@
-import { Nav } from "./components/Nav";
-import { Hero } from "./components/Hero";
-import { Services } from "./components/Services";
-import { About } from "./components/About";
-import { ReviewsCarousel } from "./components/ReviewsCarousel";
-import { LeaveReview } from "./components/LeaveReview";
-import { ContactForm } from "./components/ContactForm";
-import { Footer } from "./components/Footer";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { SiteLayout } from "./components/SiteLayout";
+import { HomePage } from "./pages/HomePage";
+import { ResidentialPage } from "./pages/ResidentialPage";
+import { CommercialPage } from "./pages/CommercialPage";
+import { ConsultingPage } from "./pages/ConsultingPage";
+import { WorkPage } from "./pages/WorkPage";
+import { AboutPage } from "./pages/AboutPage";
+import { ContactPage } from "./pages/ContactPage";
+import { AdminPage } from "./pages/AdminPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
+
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      const id = hash.replace("#", "");
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    }
+  }, [pathname, hash]);
+  return null;
+}
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-ink-900 text-bone-100">
-      <Nav />
-      <main>
-        <Hero />
-        <Services />
-        <About />
-        <ReviewsCarousel />
-        <LeaveReview />
-        <ContactForm />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <ScrollManager />
+      <Routes>
+        <Route element={<SiteLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/residential" element={<ResidentialPage />} />
+          <Route path="/commercial" element={<CommercialPage />} />
+          <Route path="/consulting" element={<ConsultingPage />} />
+          <Route path="/work" element={<WorkPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+        <Route path="/admin" element={<AdminPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

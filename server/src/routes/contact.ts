@@ -23,10 +23,18 @@ const ContactSchema = z.object({
   company: z.string().max(0).optional(),
 });
 
-type ContactRecord = z.infer<typeof ContactSchema> & {
+export type ContactRecord = z.infer<typeof ContactSchema> & {
   id: string;
   createdAt: string;
 };
+
+export async function loadAllContacts(): Promise<ContactRecord[]> {
+  return readJson<ContactRecord[]>("contact-requests.json", []);
+}
+
+export async function saveAllContacts(records: ContactRecord[]): Promise<void> {
+  await writeJson("contact-requests.json", records);
+}
 
 contactRouter.post("/", async (req, res) => {
   const parsed = ContactSchema.safeParse(req.body);

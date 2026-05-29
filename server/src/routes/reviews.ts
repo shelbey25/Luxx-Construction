@@ -51,9 +51,75 @@ const SEED: Review[] = [
     createdAt: "2025-12-19T18:00:00.000Z",
     approved: true,
   },
+  {
+    id: "seed-4",
+    name: "Alexandra Beaumont",
+    location: "Boca Raton, FL",
+    rating: 5,
+    title: "Concierge-level service",
+    body:
+      "Our oceanfront renovation was complex and tightly scheduled. LUXX kept every trade aligned and the result is breathtaking. Worth every dollar.",
+    createdAt: "2025-11-04T16:30:00.000Z",
+    approved: true,
+  },
+  {
+    id: "seed-5",
+    name: "James & Renee Holloway",
+    location: "Vero Beach, FL",
+    rating: 5,
+    title: "A roofing job we finally trust",
+    body:
+      "After two bad experiences with other contractors, LUXX replaced our roof in five days flat with cleaner workmanship than we thought possible.",
+    createdAt: "2025-09-22T14:00:00.000Z",
+    approved: true,
+  },
+  {
+    id: "seed-6",
+    name: "Kenji Tanaka, AIA",
+    location: "Miami, FL",
+    rating: 5,
+    title: "My go-to GC for high-end residential",
+    body:
+      "As an architect I’ve worked with dozens of GCs across South Florida. LUXX understands custom detailing and protects the design intent.",
+    createdAt: "2025-08-11T19:00:00.000Z",
+    approved: true,
+  },
+  {
+    id: "seed-7",
+    name: "Sophia Castellanos",
+    location: "Fort Lauderdale, FL",
+    rating: 4,
+    title: "Beautifully done remodel",
+    body:
+      "Kitchen and primary bath came out gorgeous. There were a couple of small punch-list delays but communication was great throughout.",
+    createdAt: "2025-07-29T11:00:00.000Z",
+    approved: true,
+  },
+  {
+    id: "seed-8",
+    name: "Westwind Property Group",
+    location: "West Palm Beach, FL",
+    rating: 5,
+    title: "Reliable partner for our portfolio",
+    body:
+      "LUXX has handled assessments and recurring maintenance across six of our properties. Detailed reporting, fast response, fair pricing.",
+    createdAt: "2025-06-14T10:00:00.000Z",
+    approved: true,
+  },
+  {
+    id: "seed-9",
+    name: "Daniel & Maya Rosenberg",
+    location: "Naples, FL",
+    rating: 5,
+    title: "They simply care",
+    body:
+      "From the very first call you can tell this is a family operation that cares about doing the job right. Our new build is a dream home.",
+    createdAt: "2025-05-02T15:00:00.000Z",
+    approved: true,
+  },
 ];
 
-async function loadAll(): Promise<Review[]> {
+export async function loadAll(): Promise<Review[]> {
   const stored = await readJson<Review[] | null>("reviews.json", null);
   if (!stored || stored.length === 0) {
     await writeJson("reviews.json", SEED);
@@ -116,3 +182,7 @@ reviewsRouter.post("/", async (req, res) => {
 
   res.status(201).json({ ok: true, review: autoApprove ? review : { ...review, body: "" } });
 });
+
+export async function saveAll(reviews: Review[]): Promise<void> {
+  await writeJson("reviews.json", reviews);
+}

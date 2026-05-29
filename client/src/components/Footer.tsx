@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Logo } from "./Logo";
 
 export function Footer() {
@@ -27,21 +28,29 @@ export function Footer() {
         <div className="md:col-span-3">
           <p className="eyebrow">Menu</p>
           <ul className="mt-5 space-y-3 text-sm text-bone-200">
-            <li><a href="#top" className="hover:text-gold-300">Home</a></li>
-            <li><a href="#services" className="hover:text-gold-300">Expertise</a></li>
-            <li><a href="#about" className="hover:text-gold-300">About</a></li>
-            <li><a href="#reviews" className="hover:text-gold-300">Reviews</a></li>
-            <li><a href="#contact" className="hover:text-gold-300">Contact</a></li>
+            <li><Link to="/" className="hover:text-gold-300">Home</Link></li>
+            <li><Link to="/about" className="hover:text-gold-300">About</Link></li>
+            <li><Link to="/work" className="hover:text-gold-300">Our Work</Link></li>
+            <li><Link to="/contact" className="hover:text-gold-300">Contact</Link></li>
           </ul>
         </div>
 
-        <div className="md:col-span-4">
+        <div className="md:col-span-2">
+          <p className="eyebrow">Expertise</p>
+          <ul className="mt-5 space-y-3 text-sm text-bone-200">
+            <li><Link to="/residential" className="hover:text-gold-300">Residential</Link></li>
+            <li><Link to="/commercial" className="hover:text-gold-300">Commercial</Link></li>
+            <li><Link to="/consulting" className="hover:text-gold-300">Consulting</Link></li>
+          </ul>
+        </div>
+
+        <div className="md:col-span-2">
           <p className="eyebrow">Contact</p>
           <ul className="mt-5 space-y-3 text-sm text-bone-200">
             <li><a href="tel:+17727754908" className="hover:text-gold-300">+1 (772) 775-4908</a></li>
             <li><a href="mailto:info@luxxfl.com" className="hover:text-gold-300">info@luxxfl.com</a></li>
             <li className="text-bone-300">Ocean Breeze, FL</li>
-            <li className="text-bone-300">Mon – Fri · 8:00 AM – 6:00 PM</li>
+            <li className="text-bone-300">Mon – Fri · 8 AM – 6 PM</li>
           </ul>
         </div>
       </div>
