@@ -118,7 +118,7 @@ export function Hero() {
               transition={{ duration: 0.9, delay: 0.55 }}
               className="absolute -left-2 top-6 hidden rounded-2xl border border-bone-100/10 bg-ink-800/80 px-5 py-4 text-xs text-bone-100 backdrop-blur-xl md:block"
             >
-              <p className="font-display text-2xl text-gold-300">5.0★</p>
+              <p className="font-display text-2xl text-gold-300">4.9★</p>
               <p className="mt-1 uppercase tracking-[0.22em] text-bone-300">
                 Client Rated
               </p>

@@ -4,7 +4,7 @@ const STATS = [
   { value: "20+", label: "Years Building" },
   { value: "500+", label: "Projects Delivered" },
   { value: "100%", label: "Licensed & Insured" },
-  { value: "5.0★", label: "Client Rating" },
+  { value: "4.9★", label: "Client Rating" },
 ];
 
 export function About() {
